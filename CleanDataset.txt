@@ -23,3 +23,6 @@ DELETE  FROM email_data where file like '%X-bcc%';
 DELETE  FROM email_data where file like '%X-cc%';
 DELETE  FROM email_data where file like '%X-To%';
 DELETE  FROM email_data where file like '%X-From%';
+
+// verify if header was completely deleted
+select * from email_data limit 10;
