@@ -1,0 +1,26 @@
+// check the presence of the dataset
+gsutil ls gs://hive-warehouse-cloud/
+
+// copy the dataset in dataproc local
+sudo gsutil cp gs://hive-warehouse-cloud/emails.csv  .
+
+// execute hive
+hive
+
+// create database email
+create database email;
+
+// check if database exist
+show databases;
+
+// access the database
+use email;
+
+// create simple table
+create table dataset(file string);
+
+// verify if table exist
+show tables;
+
+// load dataset from dataproc local path into table
+LOAD data local inpath 'emails.csv' OVERWRITE into table dataset”;
