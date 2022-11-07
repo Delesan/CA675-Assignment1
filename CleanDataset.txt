@@ -1,0 +1,25 @@
+// set environment variable
+set hive.support.concurrency = true; 
+set hive.enforce.bucketing = true; 
+set hive.exec.dynamic.partition.mode = nonstrict; 
+set hive.txn.manager = org.apache.hadoop.hive.ql.lockmgr.DbTxnManager; 
+set hive.compactor.initiator.on = true; 
+set hive.compactor.worker.threads =  1;
+
+// create table orc
+“create table email_data (file string) stored as orc TBLPROPERTIES ('transactional'='true');”
+
+// insert dataset table into orc table
+from dataset insert into table email_data select file;
+
+// remove all header from mails
+DELETE  FROM email_data where file like '%Content-Transfer-Encoding%';
+DELETE  FROM email_data where file like '%Content-Type%';
+DELETE  FROM email_data where file like '%Mime-Version%';
+DELETE  FROM email_data where file like '%X-Folder%';
+DELETE  FROM email_data where file like '%X-Origin%';
+DELETE  FROM email_data where file like '%X-FileName%';
+DELETE  FROM email_data where file like '%X-bcc%';
+DELETE  FROM email_data where file like '%X-cc%';
+DELETE  FROM email_data where file like '%X-To%';
+DELETE  FROM email_data where file like '%X-From%';
